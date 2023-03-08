@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './index.css'
+import './App.css'
+import { Route,Routes } from "react-router-dom";
+import ProblemPage from './components/ProblemPage';
+import HomePage from './components/HomePage';
+import Submission from './components/Submission';
+import ProblemDescription from './components/ProblemDescription';
+import Testcase from './components/Testcase';
+import RandomProblem from './components/RandomProblem';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Routes>
+    <Route path='/' element={<RandomProblem/>} exact />
+      <Route path='/:id' element={<HomePage/>}  />
+      <Route path='/problem/:id' element={<ProblemPage/>} />
+      <Route path='/Submission/:id/:verdict' element={<Submission/>} exact/>
+      <Route path='/addProblem' element={<ProblemDescription/>} />
+      <Route path='/addTestcase' element={<Testcase/>} />
+    </Routes>
     </div>
   );
 }
