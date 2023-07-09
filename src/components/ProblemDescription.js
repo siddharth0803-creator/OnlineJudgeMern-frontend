@@ -1,13 +1,47 @@
 import React,{useState} from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom';
+import CodeMirror from '@uiw/react-codemirror';
+import { darcula, darculaInit } from '@uiw/codemirror-theme-darcula';
 
 const ProblemDescription = () => {
-  const [problemName, setproblemName] = useState("")
-  const [problemStatement, setproblemStatement] = useState("")
-  const [constraint, setconstraint] = useState("")
-  const [inputFormat, setinputFormat] = useState("")
-  const [outputFormat, setoutputFormat] = useState("")
+  const space = `
+  
+  
+  
+  `
+  const extraSpace = `
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  `
+  const [problemName, setproblemName] = useState(space)
+  const [problemStatement, setproblemStatement] = useState(extraSpace)
+  const [constraint, setconstraint] = useState(space)
+  const [inputFormat, setinputFormat] = useState(space)
+  const [outputFormat, setoutputFormat] = useState(space)
   const [success, setsuccess] = useState(false)
   const [error, seterror] = useState(false)
 
@@ -20,7 +54,7 @@ const ProblemDescription = () => {
       outputFormat
     }
     try{
-    const {data}=await axios.post("http://localhost:5000/addProblem",payload)
+    const {data}=await axios.post("https://ojbackend.onrender.com/addProblem",payload)
       setsuccess(true)
     }catch({response}){
       
@@ -41,131 +75,122 @@ const ProblemDescription = () => {
         fontWeight:'bolder',
         fontSize:'50px',
         color:'yellowgreen',
-        marginLeft:'300px'
+        marginLeft:'35px'
       }}>
         Problem Name
       </p>
-      <textarea className=" resize mt-8 ml-80 placeholder:italic placeholder:text-slate-400 
-    block bg-white h-500px w-2/5 border border-slate-300 rounded-md 
-    py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 
-    focus:ring-sky-500 focus:ring-1 sm:text-sm" 
-    type="text" value={problemName}
-    spellCheck="false"
-    style={{
-      height: '83px',
-      width: '1052px'
-    }}
-    onChange={(e)=>{
-      setproblemName(e.target.value)
-      console.log(problemName)
-    }}
-  >
-  </textarea>
+      <div className='Input mt-6 mb-6 ml-10 mr-10'>
+      <CodeMirror 
+        className="Editor" 
+        theme={darculaInit({
+          settings: {
+            fontFamily: 'monospace',
+          }
+        })}
+        value={problemName}
+        onChange={(value, viewUpdate) => {
+          setproblemName(value);
+        }}
+      />
+      </div>
 
   <p style={{
         fontWeight:'bolder',
         fontSize:'50px',
         color:'yellowgreen',
-        marginLeft:'300px',
+        marginLeft:'35px',
         marginTop:'100px'
       }}>
         Problem Statement
       </p>
-      <textarea className=" resize mt-8 ml-80 placeholder:italic placeholder:text-slate-400 
-    block bg-white h-500px w-2/5 border border-slate-300 rounded-md 
-    py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 
-    focus:ring-sky-500 focus:ring-1 sm:text-sm" 
-    placeholder="" 
-    type="text" value={problemStatement}
-    spellCheck="false"
-    style={{
-      height: '300px',
-      width: '1052px'
-    }}
-    onChange={(e)=>{
-      setproblemStatement(e.target.value)
-    }}
-  >
-  </textarea>
+      <div className="EditorContainer mt-6 mb-6 ml-10 mr-10">
+      <CodeMirror 
+        className="Editor" 
+        theme={darculaInit({
+          settings: {
+            fontFamily: 'monospace',
+          }
+        })}
+        value={problemStatement}
+        onChange={(value, viewUpdate) => {
+          setproblemStatement(value);
+        }}
+      />
+      </div>
 
   <p style={{
         fontWeight:'bolder',
         fontSize:'50px',
         color:'yellowgreen',
-        marginLeft:'300px',
+        marginLeft:'35px',
         marginTop:'100px'
       }}>
         Input Format
       </p>
-      <textarea className=" resize mt-8 ml-80 placeholder:italic placeholder:text-slate-400 
-    block bg-white h-500px w-2/5 border border-slate-300 rounded-md 
-    py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 
-    focus:ring-sky-500 focus:ring-1 sm:text-sm" 
-    placeholder="" 
-    type="text" value={inputFormat}
-    spellCheck="false"
-    style={{
-      height: '300px',
-      width: '1052px'
-    }}
-    onChange={(e)=>{
-      setinputFormat(e.target.value)
-    }}
-  >
-  </textarea>
+      <div className='Input mt-6 mb-6 ml-10 mr-10'>
+      <CodeMirror 
+        className="Editor" 
+        theme={darculaInit({
+          settings: {
+            fontFamily: 'monospace',
+          }
+        })}
+        value={inputFormat}
+        onChange={(value, viewUpdate) => {
+          setinputFormat(value);
+        }}
+      />
+      </div>
 
 
   <p style={{
         fontWeight:'bolder',
         fontSize:'50px',
         color:'yellowgreen',
-        marginLeft:'300px',
+        marginLeft:'35px',
         marginTop:'100px'
       }}>
         Constraints
       </p>
-      <textarea className=" resize mt-8 ml-80 placeholder:italic placeholder:text-slate-400 
-    block bg-white h-500px w-2/5 border border-slate-300 rounded-md 
-    py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 
-    focus:ring-sky-500 focus:ring-1 sm:text-sm" 
-    placeholder="" 
-    type="text" value={constraint}
-    spellCheck="false"
-    style={{
-      height: '300px',
-      width: '1052px'
-    }}
-    onChange={(e)=>{
-      setconstraint(e.target.value)
-    }}
-  >
-  </textarea>
+      <div className='Input mt-6 mb-6 ml-10 mr-10'>
+      <CodeMirror 
+        className="Editor" 
+        theme={darculaInit({
+          settings: {
+            fontFamily: 'monospace',
+          }
+        })}
+        value={constraint}
+        onChange={(value, viewUpdate) => {
+          setconstraint(value);
+        }}
+      />
+      </div>
 
 
   <p style={{
         fontWeight:'bolder',
         fontSize:'50px',
         color:'yellowgreen',
-        marginLeft:'300px',
+        marginLeft:'35px',
         marginTop:'100px'
       }}>
         Output Format
       </p>
-      <textarea className=" resize mt-8 ml-80 placeholder:italic placeholder:text-slate-400 
-    block bg-white h-500px w-2/5 border border-slate-300 rounded-md 
-    py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 
-    focus:ring-sky-500 focus:ring-1 sm:text-sm" 
-    placeholder="" spellCheck="false" 
-    type="text" value={outputFormat}
-    style={{
-      height: '300px',
-      width: '1052px'
-    }}
-    onChange={(e)=>{
-      setoutputFormat(e.target.value)
-    }}
-  >
-  </textarea>
+      <div className='Input mt-6 mb-6 ml-10 mr-10'>
+      <CodeMirror 
+        className="Editor" 
+        theme={darculaInit({
+          settings: {
+            fontFamily: 'monospace',
+          }
+        })}
+        value={outputFormat}
+        onChange={(value, viewUpdate) => {
+          setoutputFormat(value);
+        }}
+      />
+      </div>
 
   <div style={{
     display: "inline-flex",
@@ -174,7 +199,7 @@ const ProblemDescription = () => {
   <button className="bg-green-500 hover:bg-green-700 
   text-white font-bold py-2 px-4 rounded"
     style={{
-      marginLeft:'320px',
+      marginLeft:'35px',
       marginTop:'25px',
       marginBottom:'50px',
       width:'250px',
@@ -236,7 +261,7 @@ const ProblemDescription = () => {
 <button className="bg-green-500 hover:bg-green-700 
   text-white font-bold py-2 px-4 rounded"
     style={{
-      marginLeft:'180px',
+      marginLeft:'50px',
       marginTop:'25px',
       marginBottom:'50px',
       width:'250px',

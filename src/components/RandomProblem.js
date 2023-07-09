@@ -5,7 +5,7 @@ import image from '../BackgroundImage.jpg'
 
 const RandomProblem = () => {
   const total = async () => {
-    const { data } = await axios.get("http://localhost:5000/totalProblem");
+    const { data } = await axios.get("https://ojbackend.onrender.com/totalProblem");
     const total_question = Number(data.total);
     const id = Math.floor((Math.random() * total_question) + 1);
     return Number(id);

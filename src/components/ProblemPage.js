@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import '../App.css'
 import CodeMirror from '@uiw/react-codemirror';
-import { darcula, darculaInit } from '@uiw/codemirror-theme-darcula';
+import { darculaInit } from '@uiw/codemirror-theme-darcula';
 import { cpp, cppLanguage } from '@codemirror/lang-cpp';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
@@ -29,7 +29,7 @@ const ProblemPage = () => {
   const GetDetail = async (problemId) => {
     const payload = { problemId };
     try {
-      const { data } = await axios.post("http://localhost:5000/getinfoById", payload);
+      const { data } = await axios.post("https://ojbackend.onrender.com/getinfoById", payload);
       setproblemName(data.problemName)
       //console.log(`${problemName} of GetDetail`)
       
@@ -51,7 +51,7 @@ const ProblemPage = () => {
   const GetInputDetail = async () => {
     //console.log(`${problemName} of GetinputDetail`)
     const payload = { problemName };
-    return axios.post("http://localhost:5000/getinput", payload)
+    return axios.post("https://ojbackend.onrender.com/getinput", payload)
     .then(({ data }) => {
       let arr=data.input
       arr.map((e)=>{
@@ -72,7 +72,7 @@ const ProblemPage = () => {
   
   const GetOutputDetail = async () => {
     const payload = { problemName };
-    return axios.post("http://localhost:5000/getoutput", payload)
+    return axios.post("https://ojbackend.onrender.com/getoutput", payload)
     .then(({ data }) => {
 
       let arr=data.output
@@ -159,7 +159,7 @@ int main(){
       input
     }
     try{
-    const {data}=await axios.post("http://localhost:5000/run",payload)
+    const {data}=await axios.post("https://ojbackend.onrender.com/run",payload)
     let ObtainedOutput=data.output
     ObtainedOutput+=`
   
@@ -197,7 +197,7 @@ const SubmitProblem = async () => {
       input: inputarray[i],
     };
     try {
-      const { data } = await axios.post("http://localhost:5000/run", payload);
+      const { data } = await axios.post("https://ojbackend.onrender.com/run", payload);
       let ObtainedOutput = data.output;
       if (ObtainedOutput != outputarray[i]) {
         setverdict(0)

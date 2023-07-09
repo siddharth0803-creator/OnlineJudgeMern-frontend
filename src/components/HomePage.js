@@ -8,7 +8,7 @@ const HomePage = () => {
   const GetDetail=async ()=>{
   const payload={problemId:id}
   try{
-    const {data}=await axios.post("http://localhost:5000/getinfoById",payload)
+    const {data}=await axios.post("https://ojbackend.onrender.com/getinfoById",payload)
       setproblemName(data.problemName)
     }catch({response}){
       

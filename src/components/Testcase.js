@@ -18,7 +18,7 @@ const Testcase = () => {
       output
     }
     try{
-    const {data}=await axios.post("http://localhost:5000/addTestcaseinput",payload1)
+    const {data}=await axios.post("https://ojbackend.onrender.com/addTestcaseinput",payload1)
       setsucess(true)
       settestNo(data.TestCaseId)
     }catch({response}){
@@ -35,7 +35,7 @@ const Testcase = () => {
 
 
     try{
-      const {data}=await axios.post("http://localhost:5000/addTestcaseoutput",payload2)
+      const {data}=await axios.post("https://ojbackend.onrender.com/addTestcaseoutput",payload2)
         setsucess(true)
         settestNo(data.TestCaseId)
       }catch({response}){
