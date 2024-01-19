@@ -1,25 +1,37 @@
 import React,{useState} from 'react'
 import axios from 'axios'
+import CodeMirror from '@uiw/react-codemirror';
+import { darcula, darculaInit } from '@uiw/codemirror-theme-darcula';
 
 const Testcase = () => {
-  const [input, setinput] = useState("")
-  const [output,setoutput] = useState("")
-  const [TestCaseName, setTestCaseName] = useState("")
+  const space = `
+  
+  
+  
+  `
+  const [input, setinput] = useState(space)
+  const [output,setoutput] = useState(space)
+  const [TestCaseName, setTestCaseName] = useState(space)
   const [sucess, setsucess] = useState(false)
   const [error, seterror] = useState(false)
   const [testNo, settestNo] = useState(0)
+  const [loading,setLoading]= useState(false)
   const HandleSubmit=async ()=>{
+    const trimTestCaseName=TestCaseName.trim()
+    const trimInput=input.trim()
+    const trimOutput=output.trim()
+    setLoading(true)
     const payload1={
-      TestCaseName,
-      input
+      TestCaseName:trimTestCaseName,
+      input:trimInput
     }
     const payload2={
-      TestCaseName,
-      output
+      TestCaseName:trimTestCaseName,
+      output:trimOutput
     }
     try{
     const {data}=await axios.post("https://ojbackend.onrender.com/addTestcaseinput",payload1)
-      setsucess(true)
+
       settestNo(data.TestCaseId)
     }catch({response}){
       
@@ -38,6 +50,7 @@ const Testcase = () => {
       const {data}=await axios.post("https://ojbackend.onrender.com/addTestcaseoutput",payload2)
         setsucess(true)
         settestNo(data.TestCaseId)
+        setLoading(false)
       }catch({response}){
         
         if(response){
@@ -47,99 +60,94 @@ const Testcase = () => {
           console.log("Error Connecting to server!!")
         }
         seterror(true)
-  
+        setLoading(false)
       }
+      setLoading(false)
   }
   return (
     <div>
      <p style={{
         fontWeight:'bolder',
         fontSize:'50px',
-        color:'yellowgreen',
-        marginLeft:'320px',
-        marginTop:'100px'
+        color:'white',
+        marginLeft:'35px'
       }}>
         Problem Name
       </p>
-      <textarea className=" resize mt-8 ml-80 placeholder:italic placeholder:text-slate-400 
-    block bg-white h-500px w-2/5 border border-slate-300 rounded-md 
-    py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 
-    focus:ring-sky-500 focus:ring-1 sm:text-sm" 
-    placeholder="" spellCheck="false" 
-    type="text" value={TestCaseName}
-    style={{
-      height: '139px',
-      width: '943px'
-    }}
-    onChange={(e)=>{
-      setTestCaseName(e.target.value)
-    }}
-  >
-  </textarea>
-  <p style={{
+      <div className='Input mt-6 mb-6 ml-10 mr-10'>
+      <CodeMirror 
+        className="Editor" 
+        theme={darculaInit({
+          settings: {
+            fontFamily: 'monospace',
+          }
+        })}
+        value={TestCaseName}
+        onChange={(value, viewUpdate) => {
+          setTestCaseName(value);
+        }}
+      />
+      </div>
+      <p style={{
         fontWeight:'bolder',
         fontSize:'50px',
-        color:'yellowgreen',
-        marginLeft:'320px',
-        marginTop:'100px'
+        color:'white',
+        marginLeft:'35px'
       }}>
         Input
       </p>
-      <textarea className=" resize mt-8 ml-80 placeholder:italic placeholder:text-slate-400 
-    block bg-white h-500px w-2/5 border border-slate-300 rounded-md 
-    py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 
-    focus:ring-sky-500 focus:ring-1 sm:text-sm" 
-    placeholder="" spellCheck="false" 
-    type="text" value={input}
-    style={{
-      height: '139px',
-      width: '943px'
-    }}
-    onChange={(e)=>{
-      setinput(e.target.value)
-    }}
-  >
-  </textarea> 
-  <p style={{
+      <div className='Input mt-6 mb-6 ml-10 mr-10'>
+      <CodeMirror 
+        className="Editor" 
+        theme={darculaInit({
+          settings: {
+            fontFamily: 'monospace',
+          }
+        })}
+        value={input}
+        onChange={(value, viewUpdate) => {
+          setinput(value);
+        }}
+      />
+      </div> 
+      <p style={{
         fontWeight:'bolder',
         fontSize:'50px',
-        color:'yellowgreen',
-        marginLeft:'320px',
-        marginTop:'100px'
+        color:'white',
+        marginLeft:'35px'
       }}>
         Output
       </p>
-      <textarea className=" resize mt-8 ml-80 placeholder:italic placeholder:text-slate-400 
-    block bg-white h-500px w-2/5 border border-slate-300 rounded-md 
-    py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 
-    focus:ring-sky-500 focus:ring-1 sm:text-sm" 
-    placeholder="" spellCheck="false" 
-    type="text" value={output}
-    style={{
-      height: '139px',
-      width: '943px'
-    }}
-    onChange={(e)=>{
-      setoutput(e.target.value)
-    }}
-  >
-  </textarea> 
+      <div className='Input mt-6 mb-6 ml-10 mr-10'>
+      <CodeMirror 
+        className="Editor" 
+        theme={darculaInit({
+          settings: {
+            fontFamily: 'monospace',
+          }
+        })}
+        value={output}
+        onChange={(value, viewUpdate) => {
+          setoutput(value);
+        }}
+      />
+      </div> 
 
-  <div style={{
+      <div style={{
     display: "inline-flex",
     alignItems: "center"
   }}>
   <button className="bg-green-500 hover:bg-green-700 
   text-white font-bold py-2 px-4 rounded"
     style={{
-      marginLeft:'320px',
+      marginLeft:'35px',
       marginTop:'25px',
       marginBottom:'50px',
       width:'250px',
     }}
     onClick={HandleSubmit}
     >
-    Add Testcase
+    {loading? <i className="fas fa-spinner fa-spin"></i> : 'Add Testcase'}
   </button>
   {sucess && <div style={{marginLeft:'150px',marginBottom:'15px'}}>
   <div class="max-w-xs bg-green-500 text-sm text-white rounded-md shadow-lg" role="alert">

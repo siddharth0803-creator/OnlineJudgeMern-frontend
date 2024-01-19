@@ -78,7 +78,7 @@ const HomePage = () => {
     type="text" value={problemName}
     style={{
       height:'45px',
-      width:'638px',
+      width:'700px',
       fontSize:'45px',
       textAlign:'center'
     }}

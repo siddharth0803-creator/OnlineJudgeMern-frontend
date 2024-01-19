@@ -191,15 +191,16 @@ int main(){
 const SubmitProblem = async () => {
   setSubmitLoading(true);
   for (let i = 0; i < inputarray.length; i++) {
+    const input=inputarray[i].toString().trim()
     const payload = {
       language: "cpp",
       code,
-      input: inputarray[i],
+      input,
     };
     try {
       const { data } = await axios.post("https://ojbackend.onrender.com/run", payload);
       let ObtainedOutput = data.output;
-      if (ObtainedOutput != outputarray[i]) {
+      if (ObtainedOutput.toString().trim() != outputarray[i].toString().trim()) {
         setverdict(0)
         break;
       }
@@ -252,10 +253,10 @@ useEffect(() => {
        <div><h1><b>Example</b></h1>
         <br/>
         <h1><b>Input</b></h1>
-        <p style={{color:'#33FFFF'}}>{inputarray[0]}</p>
+        <p style={{color:'white'}}>{inputarray[0]}</p>
         <br/>
         <h1><b>Ouput</b></h1>
-        <p style={{color:'#33FFFF'}}>{outputarray[0]}</p> </div> 
+        <p style={{color:'white'}}>{outputarray[0]}</p> </div> 
 
       </div>
       <div className="EditorContainer mt-6 mb-6 ml-10 mr-10">

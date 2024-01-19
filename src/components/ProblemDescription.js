@@ -44,18 +44,26 @@ const ProblemDescription = () => {
   const [outputFormat, setoutputFormat] = useState(space)
   const [success, setsuccess] = useState(false)
   const [error, seterror] = useState(false)
+  const [loading,setLoading] = useState(false)
 
   const HandleSubmit=async ()=>{
-    const payload={
-      problemName,
-      problemStatement,
-      constraint,
-      inputFormat,
-      outputFormat
-    }
+    const trimmedProblemName = problemName.trim();
+    const trimmedProblemStatement = problemStatement.trim();
+    const trimmedConstraint = constraint.trim();
+    const trimmedInputFormat = inputFormat.trim();
+    const trimmedOutputFormat = outputFormat.trim();
+    setLoading(true)
+    const payload = {
+      problemName: trimmedProblemName,
+      problemStatement: trimmedProblemStatement,
+      constraint: trimmedConstraint,
+      inputFormat: trimmedInputFormat,
+      outputFormat: trimmedOutputFormat,
+    };
     try{
     const {data}=await axios.post("https://ojbackend.onrender.com/addProblem",payload)
       setsuccess(true)
+      setLoading(false)
     }catch({response}){
       
       if(response){
@@ -65,8 +73,9 @@ const ProblemDescription = () => {
         console.log("Error Connecting to server!!")
       }
       seterror(true)
-
+      setLoading(false)
     }
+    setLoading(false)
   }
 
   return (
@@ -74,7 +83,7 @@ const ProblemDescription = () => {
       <p style={{
         fontWeight:'bolder',
         fontSize:'50px',
-        color:'yellowgreen',
+        color:'white',
         marginLeft:'35px'
       }}>
         Problem Name
@@ -97,7 +106,7 @@ const ProblemDescription = () => {
   <p style={{
         fontWeight:'bolder',
         fontSize:'50px',
-        color:'yellowgreen',
+        color:'white',
         marginLeft:'35px',
         marginTop:'100px'
       }}>
@@ -121,7 +130,7 @@ const ProblemDescription = () => {
   <p style={{
         fontWeight:'bolder',
         fontSize:'50px',
-        color:'yellowgreen',
+        color:'white',
         marginLeft:'35px',
         marginTop:'100px'
       }}>
@@ -146,7 +155,7 @@ const ProblemDescription = () => {
   <p style={{
         fontWeight:'bolder',
         fontSize:'50px',
-        color:'yellowgreen',
+        color:'white',
         marginLeft:'35px',
         marginTop:'100px'
       }}>
@@ -171,7 +180,7 @@ const ProblemDescription = () => {
   <p style={{
         fontWeight:'bolder',
         fontSize:'50px',
-        color:'yellowgreen',
+        color:'white',
         marginLeft:'35px',
         marginTop:'100px'
       }}>
@@ -206,7 +215,7 @@ const ProblemDescription = () => {
     }}
     onClick={HandleSubmit}
     >
-    Add Problem
+    {loading ? <i className="fas fa-spinner fa-spin"></i> : 'Add Problem'}
   </button>
   
   {success && <div style={{marginLeft:'150px',marginBottom:'15px'}}>
